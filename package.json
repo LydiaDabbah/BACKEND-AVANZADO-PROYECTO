@@ -1,0 +1,28 @@
+{
+  "name": "backend-avanzado-proyecto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LydiaDabbah/BACKEND-AVANZADO-PROYECTO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LydiaDabbah/BACKEND-AVANZADO-PROYECTO/issues"
+  },
+  "homepage": "https://github.com/LydiaDabbah/BACKEND-AVANZADO-PROYECTO#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.1",
+    "nodemon": "^2.0.20"
+  }
+}
