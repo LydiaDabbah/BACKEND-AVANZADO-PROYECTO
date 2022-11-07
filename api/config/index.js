@@ -10,4 +10,5 @@ export default {
   database: {
     uri: process.env.URI || 'mongodb://localhost/test',
   },
+  jwtSecret:process.env.JWT_SECRET
 };
