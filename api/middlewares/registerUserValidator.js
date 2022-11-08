@@ -31,7 +31,8 @@ const registerUserValidator = async (req, res, next) => {
    
  } catch (error) {
    return res.status(400).json({
-     msg: error.details[0].message,
+    // msg: error.details[0].message,
+    error
      // quite el error porque me da demasiada info
    });
  }

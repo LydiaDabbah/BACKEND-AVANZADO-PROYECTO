@@ -4,7 +4,7 @@ import { registerUserValidator } from '../middlewares/registerUserValidator.js';
 
 const router=express.Router();
 
-router.route('/user/register').post(registerUserValidator,userController.register) 
+router.route('/user/register').post(userController.register) 
 
 router.route('/user/login').post(userController.login) 
 

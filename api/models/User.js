@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   birthDate: {
-    type: Date,
-    required: true,
+    type: Date
   },
   role: {
     type: String,
@@ -25,7 +24,7 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
   phoneNumber: {
-    type: String,
+    type: Number,
     required: true,
   },
   address: {
@@ -56,10 +55,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  isVerified: {
+ /* isVerified: {
     type: Boolean,
     default: false,
-  },
+  },*/
 });
 
 export default mongoose.model("User", userSchema);
