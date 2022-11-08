@@ -14,7 +14,7 @@ const create=async(req,res)=>{
 
     }catch(error){
         return res.status(500).json({
-            msg: 'Error al crear item',
+            msg: 'Something went wrong. Please try again later',
             error,
          });
     }
@@ -76,6 +76,7 @@ const register = async (req, res) => {
     
       const payload = {
         userId: user.id,
+        role:user.role
       };
     
       const token = jwt.encode(payload, config.jwtSecret);// jwtSecret esta en .env
@@ -94,6 +95,27 @@ const register = async (req, res) => {
    
 
 
+   const read = async (req, res) => {
+    try {
+      const user = await User.find(req.query);
+      
+      if (!user) {
+          return res.status(404).json({
+            msg: "The search has 0 results",
+          });
+        }
+  
+      return res.json({
+        msg: 'Users were found succesfully',
+       user,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        msg: 'There was a problem with the search',
+        error,
+      });
+    }
+  };
   
 
-export {create,register,login}
+export {create,register,login,read}

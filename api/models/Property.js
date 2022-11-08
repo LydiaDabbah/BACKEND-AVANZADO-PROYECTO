@@ -1,14 +1,12 @@
 import mongoose from "mongoose";
 
 const propertySchema = new mongoose.Schema({
+ 
   street: {
     type: String,
     required: true,
   },
-  streetNumber: {
-    type: String,
-    required: true,
-  },
+  
   unit: {
     type: String,
     required: true,
@@ -59,6 +57,11 @@ const propertySchema = new mongoose.Schema({
     require:true
  }
  ],
+ user:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+    require:true
+ },
   
    
 
