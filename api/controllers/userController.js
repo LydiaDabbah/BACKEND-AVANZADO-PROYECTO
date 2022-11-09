@@ -21,7 +21,6 @@ const create=async(req,res)=>{
 }  
 
 
-
 const register = async (req, res) => {
     try {
       const hashed = await bcrypt.hash(req.body.password, 10);
@@ -93,7 +92,6 @@ const register = async (req, res) => {
     }
    };
    
-
 
    const read = async (req, res) => {
     try {

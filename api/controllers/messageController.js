@@ -1,6 +1,7 @@
 import Message from "../models/Message.js";
 import jwt from 'jwt-simple';
 import config from '../config/index.js';
+import Property from "../models/Property.js";
 
 const create = async (req, res) => {
   try {
@@ -37,8 +38,10 @@ const read= async (req, res) => {
   const { userId } = payload;
   console.log(userId)
 
+
+  const properties=await Property.find({owner:userId})
   
-  const message = await Message.find()
+  const message = await Message.find({property:{$in:properties}}).populate('property','owner').populate('user',['name','lastName','email','phoneNumber'])
   console.log(message)
   
     if (!message) {

@@ -5,7 +5,7 @@ const router=express.Router();
 
 router.route('/property')
 .post(propertyController.create) 
-.get(propertyController.read)
+.get(propertyController.propertyFilter)
 
 router.route('/property/:id')
 .get(propertyController.readById)

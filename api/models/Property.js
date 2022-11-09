@@ -57,7 +57,7 @@ const propertySchema = new mongoose.Schema({
     require:true
  }
  ],
- user:{
+ owner:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User",
     require:true
