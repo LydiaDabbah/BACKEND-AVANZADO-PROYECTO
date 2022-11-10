@@ -65,9 +65,12 @@ const propertySchema = new mongoose.Schema({
  isActive:{
   type: Boolean,
   default: true,
- }
-  
-   
+ },
+ 
+ viewsCounter:{
+  type:Number,
+  default:0
+ }  
 
 });
 

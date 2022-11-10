@@ -13,9 +13,24 @@ const messageSchema = new mongoose.Schema({
    require:true
  },
 
- message:{
-    type:String,
-    require:true
+ messages:[
+   { 
+      from: {
+      type:mongoose.Schema.Types.ObjectId,
+       ref:"User",
+       require:true,
+      },
+      message:{
+         type:String,
+      require:true
+   }
+   }
+  
+],
+
+ prevMessage:{
+   type:mongoose.Schema.Types.ObjectId,
+   ref:"Message"
  }
 
 

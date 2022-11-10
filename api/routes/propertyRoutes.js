@@ -4,6 +4,8 @@ import { jwtPayload } from "../middlewares/jwtPayload.js";
 import { userTokenValidator } from "../middlewares/linkedFieldsValidator/userTokenValidator.js";
 import { userIdentityValidator } from "../middlewares/userIdentityValidator.js";
 import Property from "../models/Property.js";
+import { roleAuthValidator } from '../middlewares/roleAuthValidation.js';
+
 
 const router = express.Router();
 
@@ -14,7 +16,8 @@ router
 
 router
   .route("/property/:id")
-  .get(propertyController.readById)
+  .get(jwtPayload,roleAuthValidator(["customer", "admin"]),propertyController.readById)
   .put(jwtPayload,userIdentityValidator(Property), propertyController.update);
+ 
 
 export default router;

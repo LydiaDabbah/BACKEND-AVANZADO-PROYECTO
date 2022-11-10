@@ -1,11 +1,9 @@
-
-
 import User from '../models/User.js';
 
 const roleAuthValidator = (roles) =>async (req, res, next) => {
   
   try {
- 
+    // siempre usar jwtPayload de middleware antes
     const { userId,role } = req.payload;// se le envio con el middleware de jwtPayload
 
     if (!userId || !role) {

@@ -1,8 +1,7 @@
-
-import User from '../../models/User.js';
+import User from "../models/User.js";
 
 // valida que el usuario que viene en el body sea el que en realidad lo mando. eso lo hace con un token
-const userTokenValidator = async (req, res, next) => {
+const messageFromValidator = async (req, res, next) => {
  
 
   try {
@@ -23,9 +22,9 @@ const userTokenValidator = async (req, res, next) => {
         msg: 'InvalidToken2',
       });
     }
-
-    req.body.user=userId// para asegurar que el que manda el mensaje sea el que se registra en el mensaje
-
+    console.log(req.body.messages.from)
+    req.body.messages[0].from=userId// para asegurar que el que manda el mensaje sea el que se registra en el mensaje
+    console.log(req.body.messages.from)
     next();
 
   } catch (error) {
@@ -37,4 +36,4 @@ const userTokenValidator = async (req, res, next) => {
   }
 };
 
-export { userTokenValidator };
+export { messageFromValidator };

@@ -17,7 +17,7 @@ const userIdentityValidator=(Model)=> async (req, res,next) => {
   }
 
     const model= await Model.findById(id)
-    console.log(model)
+  
     console.log(Model.modelName==='User')
 
     
