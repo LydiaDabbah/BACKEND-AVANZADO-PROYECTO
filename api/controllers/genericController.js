@@ -80,4 +80,23 @@ const readGeneric = (Model)=>async (req, res) => {
       });
     }
   };
-  export {createGeneric,readGeneric,updateGeneric,readByIdGeneric}
+
+  const removeGeneric =(Model)=> async (req, res) => {
+    const { id } = req.params
+    
+    try {
+        const modelId = await Model.findByIdAndUpdate(id, 
+            {isActive: false},
+            {new:true})
+        return res.json({
+            msg: "Deleted successfully",
+            modelId
+        })
+    } catch (error) {
+        return res.status(500).json({
+            msg: "There was a probleme with the delete. Try again later",
+            error
+        })
+    }
+}
+  export {createGeneric,readGeneric,updateGeneric,readByIdGeneric,removeGeneric}

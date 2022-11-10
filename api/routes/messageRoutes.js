@@ -1,5 +1,6 @@
 import express from "express";
 import * as messageController from "../controllers/messageController.js";
+import { messageFieldsValidator } from "../middlewares/fieldsValidator/messageFieldsValidator.js";
 import { jwtPayload } from "../middlewares/jwtPayload.js";
 import { propertyValidator } from "../middlewares/linkedFieldsValidator/propertyValidator.js";
 import { userTokenValidator } from "../middlewares/linkedFieldsValidator/userTokenValidator.js";
@@ -10,6 +11,7 @@ const router = express.Router();
 router
   .route("/message")
   .post(
+    messageFieldsValidator,
     jwtPayload,
     userTokenValidator,
     propertyValidator,

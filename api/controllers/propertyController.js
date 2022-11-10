@@ -1,16 +1,20 @@
 import Property from "../models/Property.js";
-import {updateGeneric,readByIdGeneric, createGeneric} from "./genericController.js"
+import {updateGeneric,readByIdGeneric, createGeneric, removeGeneric} from "./genericController.js"
 
 
 const update=updateGeneric(Property)
 
 const create=createGeneric(Property)
+const remove=removeGeneric(Property)
 const propertyFilter = async (req, res) => {
   try {
 
     const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User } =req.query;
 
-    const filter = {};
+    const filter = {
+      "isActive":true
+    };
+    
 //object. keys 
     if (minPrice && !maxPrice) {
       filter.price = { $gte: minPrice };
@@ -101,4 +105,4 @@ const readById =async (req, res) => {
   }
 };
 
-export { create, readById, propertyFilter, update };
+export { create, readById, propertyFilter, update,remove };

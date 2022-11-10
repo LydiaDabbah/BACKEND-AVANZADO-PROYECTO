@@ -2,7 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jwt-simple";
 import config from "../config/index.js";
-import { readByIdGeneric, readGeneric, updateGeneric } from "./genericController.js";
+import { readByIdGeneric, readGeneric, updateGeneric,removeGeneric } from "./genericController.js";
 
 
 
@@ -23,7 +23,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      msg: "There was an error with your registration. Please try again",
+      msg: "There was an error with your registration. If you already have an account try logging in",
       error,
     });
   }
@@ -40,7 +40,7 @@ const login = async (req, res) => {
   }
   try {
     const user = await User.findOne({
-      email: body.email,
+      email: body.email,isActive:true
     });
 
     if (!user) {
@@ -80,5 +80,5 @@ const login = async (req, res) => {
 const read=readGeneric(User)
 const update=updateGeneric(User)
 const readById=readByIdGeneric(User)
-
-export {  register, login, read,update,readById };
+const remove= removeGeneric(User)
+export {  register, login, read,update,readById, remove };
