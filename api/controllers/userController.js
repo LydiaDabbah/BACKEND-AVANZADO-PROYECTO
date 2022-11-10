@@ -2,10 +2,10 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jwt-simple";
 import config from "../config/index.js";
-import { readByIdGeneric, readGeneric, updateGeneric,removeGeneric } from "./genericController.js";
+import { GenericController } from "./classGenericController.js";
 
-
-
+const controllerGeneric=new GenericController(User)
+const {read,update,readById,remove}=controllerGeneric
 
 const register = async (req, res) => {
   try {
@@ -77,8 +77,5 @@ const login = async (req, res) => {
   }
 };
 
-const read=readGeneric(User)
-const update=updateGeneric(User)
-const readById=readByIdGeneric(User)
-const remove= removeGeneric(User)
-export {  register, login, read,update,readById, remove };
+
+export {  register, login, read,update,readById, remove};

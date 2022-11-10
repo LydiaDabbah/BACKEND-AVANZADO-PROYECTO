@@ -1,21 +1,19 @@
 import Property from "../models/Property.js";
-import {updateGeneric,readByIdGeneric, createGeneric, removeGeneric} from "./genericController.js"
+import { GenericController } from "./classGenericController.js";
 
+const controllerGeneric = new GenericController(Property);
+const { create, update, remove } = controllerGeneric;
 
-const update=updateGeneric(Property)
-
-const create=createGeneric(Property)
-const remove=removeGeneric(Property)
 const propertyFilter = async (req, res) => {
   try {
-
-    const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User } =req.query;
+    const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User } =
+      req.query;
 
     const filter = {
-      "isActive":true
+      isActive: true,
     };
-    
-//object. keys 
+
+    //object. keys
     if (minPrice && !maxPrice) {
       filter.price = { $gte: minPrice };
     }
@@ -51,11 +49,11 @@ const propertyFilter = async (req, res) => {
     if (User) {
       filter.user = User;
     }
-  
+
     console.log(filter);
 
     const property = await Property.find(filter, {
-      _id: 1, 
+      _id: 1,
       images: { $slice: ["$images", 1] },
     }).populate("user", ["name", "lastName"]); // el slice e spara que me de solo la primera imagen
 
@@ -77,7 +75,7 @@ const propertyFilter = async (req, res) => {
   }
 };
 
-const readById =async (req, res) => {
+const readById = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -88,10 +86,13 @@ const readById =async (req, res) => {
         msg: "We couldn't find the document",
       });
     }
-   
-    property.viewsCounter=property.viewsCounter+1
-    const newProperty = await Property.findByIdAndUpdate(id,{"viewsCounter":property.viewsCounter},{new: true, });
-   
+
+    property.viewsCounter = property.viewsCounter + 1;
+    const newProperty = await Property.findByIdAndUpdate(
+      id,
+      { viewsCounter: property.viewsCounter },
+      { new: true }
+    );
 
     return res.json({
       msg: "Property found",
@@ -105,4 +106,4 @@ const readById =async (req, res) => {
   }
 };
 
-export { create, readById, propertyFilter, update,remove };
+export { create, readById, propertyFilter, update, remove };

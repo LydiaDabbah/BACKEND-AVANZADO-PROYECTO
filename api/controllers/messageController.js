@@ -1,8 +1,10 @@
 import Message from "../models/Message.js";
 import Property from "../models/Property.js";
-import { createGeneric } from "./genericController.js";
 
-const create = createGeneric(Message);
+import { GenericController } from "./classGenericController.js";
+
+const controllerGeneric = new GenericController(Message);
+const { create } = controllerGeneric;
 
 const read = async (req, res) => {
   try {
@@ -14,10 +16,15 @@ const read = async (req, res) => {
       });
     }
 
+    // las propiedades que tiene el user tiene
     const properties = await Property.find({ user: userId });
-    const message = await Message.find({ property: { $in: properties } })
-      .populate("property", "userr")
-      .populate("user", ["name", "lastName", "email", "phoneNumber"]);
+    // que le salgan los que le mandaron a sus porpiedades o los que esa persona envio
+    const message = await Message.find({
+      $or: [{ property: { $in: properties } }, { user: userId }],
+    })
+      .populate("property", "user")
+      .populate("user", ["name", "lastName", "email", "phoneNumber"])
+      .populate("messages.from", "name");
 
     if (message.length === 0) {
       return res.status(404).json({
@@ -47,11 +54,17 @@ const readById = async (req, res) => {
       });
     }
 
-    const message = await Message.findById(req.params.id);
+    const message = await Message.findById(req.params.id).populate(
+      "messages.from",
+      "name"
+    );
     const property = await Property.findById(message.property);
 
-    if (property.user.toString() !== userId &&
-    message.user.toString() !== userId) {// o el dueño de la propiedad o el que mando el mensaje
+    if (
+      property.user.toString() !== userId &&
+      message.user.toString() !== userId
+    ) {
+      // o el dueño de la propiedad o el que mando el mensaje
       return res.status(404).json({
         msg: "You dont have permission to perform this action",
       });
