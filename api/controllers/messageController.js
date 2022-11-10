@@ -54,10 +54,11 @@ const readById = async (req, res) => {
       });
     }
 
-    const message = await Message.findById(req.params.id).populate(
-      "messages.from",
-      "name"
-    );
+    const message = await Message.findById(req.params.id)
+      .populate("property", "user")
+      .populate("user", ["name", "lastName", "email", "phoneNumber"])
+      .populate("messages.from", "name");
+
     const property = await Property.findById(message.property);
 
     if (

@@ -4,9 +4,10 @@ import { GenericController } from "./classGenericController.js";
 const controllerGeneric = new GenericController(Property);
 const { create, update, remove } = controllerGeneric;
 
+
 const propertyFilter = async (req, res) => {
   try {
-    const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User } =
+    const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User,Type } =
       req.query;
 
     const filter = {
@@ -50,14 +51,23 @@ const propertyFilter = async (req, res) => {
       filter.user = User;
     }
 
+    if (Type){
+      filter.type=Type;
+    }
+
     console.log(filter);
 
     const property = await Property.find(filter, {
       _id: 1,
+      price: 1,
+      roomCount: 1,
+      city: 1,
+      description: 1,
+      type:1,
       images: { $slice: ["$images", 1] },
     }).populate("user", ["name", "lastName"]); // el slice e spara que me de solo la primera imagen
 
-    if (!property) {
+    if (property.length===0) {
       return res.status(404).json({
         msg: "The search has 0 results",
       });

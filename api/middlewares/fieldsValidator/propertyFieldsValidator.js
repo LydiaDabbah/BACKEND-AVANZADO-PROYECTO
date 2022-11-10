@@ -3,8 +3,8 @@ import joi from "joi";
 const propertyFieldsValidator = async (req, res, next) => {
   const userSchema = joi.object({
     street: joi.string().required(),
-    unit: joi.string().required(),
-    zipCode: joi.number().required(),
+    unit: joi.string(),
+    zipCode: joi.string().required(),
     province: joi.string().required(),
     city: joi.string().required(),
     state: joi.string().required(),

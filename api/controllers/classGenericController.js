@@ -69,6 +69,11 @@ class GenericController {
 
   create = async (req, res) => {
     try {
+
+      if(req.files){
+        req.body.images=req.files// para las imagenes cargadas
+      }
+      
       const model = await this.Model.create(req.body);
       return res.json({
         msg: "Created succesfully",

@@ -8,11 +8,10 @@ const propertySchema = new mongoose.Schema({
   },
   
   unit: {
-    type: String,
-    required: true,
+    type: String
   },
   zipCode: {
-    type: Number,
+    type: String,
     required: true,
   },
 

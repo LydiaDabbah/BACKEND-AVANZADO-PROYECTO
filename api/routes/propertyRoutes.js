@@ -6,13 +6,13 @@ import { userIdentityValidator } from "../middlewares/userIdentityValidator.js";
 import Property from "../models/Property.js";
 import { roleAuthValidator } from '../middlewares/roleAuthValidation.js';
 import { propertyFieldsValidator } from "../middlewares/fieldsValidator/propertyFieldsValidator.js";
-
+import { uploadMiddleware } from "../middlewares/uploadFiles.js";
 
 const router = express.Router();
 
 router
   .route("/property")
-  .post(propertyFieldsValidator,jwtPayload,userTokenValidator, propertyController.create)
+  .post(propertyFieldsValidator,jwtPayload,userTokenValidator, uploadMiddleware.array('files'),propertyController.create)
   .get(propertyController.propertyFilter);
 
 router

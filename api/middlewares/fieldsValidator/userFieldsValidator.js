@@ -7,7 +7,7 @@ const userFieldsValidator = async (req, res, next) => {
     dni: joi.string().required(),
     birthDate: joi.date(),
     role: joi.string().valid("admin", "customer").required(),
-    phoneNumber: joi.number().required(),
+    phoneNumber: joi.string().required(),
     address: joi.string().required(),
     references: joi
       .array()
