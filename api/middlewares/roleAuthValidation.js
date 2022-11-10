@@ -1,27 +1,30 @@
 import jwt from 'jwt-simple';
 import config from '../config/index.js';
+import { jwtPayload } from '../jwtPayload.js';
 import User from '../models/User.js';
 
-const adminAuthValidator = (roles) =>async (req, res, next) => {
+const roleAuthValidator = (roles) =>async (req, res, next) => {
  
-  const { authorization: token } = req.headers;
+  /*const { authorization: token } = req.headers;
 
 
   if (!token) {
     return res.status(403).json({
       msg: 'Token missing',
     });
-  }
-
+  }*/
+  const payload=jwtPayload(req)
+  console.log(payload)
+  
   try {
    
-    const payload = jwt.decode(token, config.jwtSecret);
-
+    //const payload = jwt.decode(token, config.jwtSecret);
+ 
     const { userId,role } = payload;
 
     if (!userId || !role) {
       return res.status(403).json({
-        msg: 'InvalidToken1',
+        msg: 'InvalidToken',
       });
     }
 
@@ -30,7 +33,7 @@ const adminAuthValidator = (roles) =>async (req, res, next) => {
 
     if (!user) {
       return res.status(403).json({
-        msg: 'InvalidToken2',
+        msg: 'InvalidToken',
       });
     }
 
@@ -51,4 +54,4 @@ const adminAuthValidator = (roles) =>async (req, res, next) => {
   }
 };
 
-export { adminAuthValidator };
+export { roleAuthValidator };

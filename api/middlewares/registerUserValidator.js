@@ -3,7 +3,7 @@ import joi from 'joi';
 const registerUserValidator = async (req, res, next) => {
 
  
- const userSchema = joi.object({ // object porque va a ser un objeto lo que valida. le pasas el mismo schema del de user que quieres validar
+ const userSchema = joi.object({ 
    name: joi.string().required(),
    email: joi.string().email().required()
               .messages({
@@ -27,13 +27,13 @@ const registerUserValidator = async (req, res, next) => {
  
  try {
    await userSchema.validateAsync(req.body);
-   next(); // si todo esta bien se va al siguiente middleware
+   next(); 
    
  } catch (error) {
    return res.status(400).json({
-    // msg: error.details[0].message,
+    
     error
-     // quite el error porque me da demasiada info
+   
    });
  }
 };

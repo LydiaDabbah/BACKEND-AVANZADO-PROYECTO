@@ -57,11 +57,15 @@ const propertySchema = new mongoose.Schema({
     require:true
  }
  ],
- owner:{
+ user:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User",
     require:true
  },
+ isActive:{
+  type: Boolean,
+  default: true,
+ }
   
    
 
