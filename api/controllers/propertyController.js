@@ -11,7 +11,7 @@ const propertyFilter = async (req, res) => {
     const { minPrice, maxPrice, City, ZipCode, minRooms, maxRooms, User } =req.query;
 
     const filter = {};
-
+//object. keys 
     if (minPrice && !maxPrice) {
       filter.price = { $gte: minPrice };
     }

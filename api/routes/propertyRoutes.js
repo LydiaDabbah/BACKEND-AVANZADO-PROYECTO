@@ -1,5 +1,6 @@
 import express from "express";
 import * as propertyController from "../controllers/propertyController.js";
+import { jwtPayload } from "../middlewares/jwtPayload.js";
 import { userTokenValidator } from "../middlewares/linkedFieldsValidator/userTokenValidator.js";
 import { userIdentityValidator } from "../middlewares/userIdentityValidator.js";
 import Property from "../models/Property.js";
@@ -14,6 +15,6 @@ router
 router
   .route("/property/:id")
   .get(propertyController.readById)
-  .put(userIdentityValidator(Property), propertyController.update);
+  .put(jwtPayload,userIdentityValidator(Property), propertyController.update);
 
 export default router;

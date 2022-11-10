@@ -1,24 +1,15 @@
+
 import Message from "../models/Message.js";
-import jwt from 'jwt-simple';
-import config from '../config/index.js';
 import Property from "../models/Property.js";
 import { createGeneric } from "./genericController.js";
 
 const create=createGeneric(Message)
+
 const read= async (req, res) => {
+  
   try {
 
-  const { authorization: token } = req.headers;
-
-  //Si token es null
-  if (!token) {
-    return res.status(403).json({
-      msg: 'Token missing',
-    });
-  }
-   
-  const payload = jwt.decode(token, config.jwtSecret);
-  const { userId } = payload;
+  const  userId  = req.payload.userId;
 
   if(!userId){
     return res.status(403).json({
@@ -26,7 +17,7 @@ const read= async (req, res) => {
     });
   }
 
-
+  
   const properties=await Property.find({user:userId})
   const message = await Message.find({property:{$in:properties}}).populate('property','userr').populate('user',['name','lastName','email','phoneNumber'])
 
@@ -48,7 +39,40 @@ const read= async (req, res) => {
   }
 };
 
+const readById= async (req, res) => {
+  
+  try {
+
+  const  userId  = req.payload.userId;
+
+  if(!userId){
+    return res.status(403).json({
+      msg: 'Token invalid',
+    });
+  }
+
+ const message = await Message.findById(req.params.id)
+ const property=await Property.findById(message.property)
+ console.log(property)
+ if(property.user.toString()!==userId){
+  return res.status(404).json({
+    msg: "You dont have permission to perform this action",
+  }); 
+ }
 
 
 
-export { create, read };
+    return res.json({
+      msg: 'The messages wasfound succesfully',
+      message,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'There was a problem with the search',
+      error,
+    });
+  }
+};
+
+
+export { create, read,readById };
